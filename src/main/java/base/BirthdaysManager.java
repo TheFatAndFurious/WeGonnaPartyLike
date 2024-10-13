@@ -1,11 +1,12 @@
 package base;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class BirthdaysManager {
     String givenName;
     String familyName;
-    Date birthdate;
+    LocalDate birthdate;
 
     public String getGivenName() {
         return givenName;
@@ -23,11 +24,11 @@ public class BirthdaysManager {
         this.familyName = familyName;
     }
 
-    public Date getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 }
