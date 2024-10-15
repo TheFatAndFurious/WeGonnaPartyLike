@@ -1,9 +1,6 @@
 package base;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Database {
     private static final String JDBC_url = "jdbc:h2:./data/database";
@@ -25,6 +22,21 @@ public class Database {
         try {
             Connection conn = getConnection();
             Statement smt = conn.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void insertData(BirthdaysManager newEntry){
+        String sql = "INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?)";
+
+        try (Connection conn = getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql)){
+                preparedStatement.setString(1, newEntry.givenName);
+                preparedStatement.setString(2, newEntry.familyName);
+                preparedStatement.setObject(3, newEntry.birthdate);
+                preparedStatement.executeUpdate();
+                System.out.println("Birthday inserted successfully");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
