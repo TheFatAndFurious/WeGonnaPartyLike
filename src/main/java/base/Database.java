@@ -16,12 +16,13 @@ public class Database {
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "givenName VARCHAR (255) NOT NULL, " +
                     "familyName VARCHAR (255) NOT NULL, " +
-                    "birthdate DATE NOT NULL, " +
+                    "birthdate DATE NOT NULL " +
                     ");";
 
         try {
             Connection conn = getConnection();
             Statement smt = conn.createStatement();
+            smt.execute(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

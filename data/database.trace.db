@@ -1,3 +1,29 @@
 2024-10-16 14:32:41 jdbc[4]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "BIRTHDAYS" not found (this database is empty); SQL statement:
 INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?) [42104-220]
+2024-10-16 17:33:01 jdbc[4]: null
+org.h2.message.DbException: The connection was not closed by the application and is garbage collected [90018-220]
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.jdbc.JdbcConnection.closeOld(JdbcConnection.java:190)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:132)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at base.Database.getConnection(Database.java:11)
+	at base.Database.insertData(Database.java:33)
+	at base.TaSoeur.main(TaSoeur.java:29)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection was not closed by the application and is garbage collected [90018-220]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 11 more
+2024-10-16 17:33:01 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "BIRTHDAYS" not found (this database is empty); SQL statement:
+INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?) [42104-220]
+2024-10-16 17:35:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS birthdays (id INT AUTO_INCREMENT PRIMARY KEY, givenName VARCHAR (255) NOT NULL, familyName VARCHAR (255) NOT NULL, birthdate DATE NOT NULL, [*]);"; expected "identifier"; SQL statement:
+CREATE TABLE IF NOT EXISTS birthdays (id INT AUTO_INCREMENT PRIMARY KEY, givenName VARCHAR (255) NOT NULL, familyName VARCHAR (255) NOT NULL, birthdate DATE NOT NULL, ); [42001-220]
+2024-10-16 17:36:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS birthdays (id INT AUTO_INCREMENT PRIMARY KEY, givenName VARCHAR (255) NOT NULL, familyName VARCHAR (255) NOT NULL, birthdate DATE NOT NULL, [*]);"; expected "identifier"; SQL statement:
+CREATE TABLE IF NOT EXISTS birthdays (id INT AUTO_INCREMENT PRIMARY KEY, givenName VARCHAR (255) NOT NULL, familyName VARCHAR (255) NOT NULL, birthdate DATE NOT NULL, ); [42001-220]
