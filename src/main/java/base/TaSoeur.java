@@ -27,7 +27,7 @@ public class TaSoeur {
         LocalDate date = LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth);
         birthdayJulie.setBirthdate(date);
         Database.insertData(birthdayJulie);
-
-        System.out.println("L'anniversaire de " + birthdayJulie.getGivenName() + " " + birthdayJulie.getFamilyName() + " est le: " + birthdayJulie.getBirthdate());
+        System.out.println("test");
+        Database.queryData();
     }
 }

@@ -1,6 +1,7 @@
 package base;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class Database {
     private static final String JDBC_url = "jdbc:h2:./data/database";
@@ -38,6 +39,26 @@ public class Database {
                 preparedStatement.setObject(3, newEntry.birthdate);
                 preparedStatement.executeUpdate();
                 System.out.println("Birthday inserted successfully");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void queryData(){
+        //String sql = "SELECT givenName, familyName, birthdate FROM birthdays WHERE birthdate = (?)";
+        String sql = "SELECT * from birthdays";
+
+        try (Connection conn = getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql)){
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("givenName");
+                String familyName = rs.getString("familyName");
+                var birthdate = rs.getObject("birthdate");
+                System.out.println(name + " " + familyName + " birthday is " + birthdate) ;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
