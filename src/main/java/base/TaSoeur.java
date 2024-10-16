@@ -10,6 +10,7 @@ public class TaSoeur {
 
         Scanner scanner = new Scanner(System.in);
         BirthdaysManager birthdayJulie = new BirthdaysManager();
+        Database.createTable();
 
         System.out.println("Please enter a given name");
         String givenName = scanner.nextLine();
@@ -25,6 +26,7 @@ public class TaSoeur {
         int yearOfBirth = scanner.nextInt();
         LocalDate date = LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth);
         birthdayJulie.setBirthdate(date);
+        Database.insertData(birthdayJulie);
 
         System.out.println("L'anniversaire de " + birthdayJulie.getGivenName() + " " + birthdayJulie.getFamilyName() + " est le: " + birthdayJulie.getBirthdate());
     }

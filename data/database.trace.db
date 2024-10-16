@@ -1,0 +1,3 @@
+2024-10-16 14:32:41 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "BIRTHDAYS" not found (this database is empty); SQL statement:
+INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?) [42104-220]
