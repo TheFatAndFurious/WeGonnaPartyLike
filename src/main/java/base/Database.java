@@ -63,6 +63,8 @@ public class Database {
         }
     }
 
+    // Here we want the function to return an array of Birthdaysmanager if there's any
+    // It is the function that will be run automatically each day to check if there's any birthdays
     public static BirthdaysManager[] queryDataByDates(){
         String sqlQuery = "SELECT givenName, familyName, birthdate FROM birthdays WHERE EXTRACT(MONTH FROM birthdate) = ? AND EXTRACT (DAY FROM birthdate) = ?";
 
