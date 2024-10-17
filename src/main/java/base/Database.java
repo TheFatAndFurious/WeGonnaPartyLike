@@ -3,6 +3,7 @@ package base;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 
 public class Database {
     private static final String JDBC_url = "jdbc:h2:./data/database";
@@ -66,24 +67,42 @@ public class Database {
 
     // Here we want the function to return an array of Birthdaysmanager if there's any
     // It is the function that will be run automatically each day to check if there's any birthdays
-    public static BirthdaysManager[] queryDataByDates() throws SQLException {
-        String sqlQuery = "SELECT givenName, familyName, birthdate FROM birthdays WHERE EXTRACT(MONTH FROM birthdate) = ? AND EXTRACT (DAY FROM birthdate) = ?";
+    public static ArrayList<BirthdaysManager> queryDataByDates(LocalDate date) {
+        if (date == null) {
+            throw new IllegalArgumentException("Date parameter cannot be null");
+        }
 
-       // EXTRACTING VALUES FROM TODAY'S DATE SO WE CAN USE IT TO QUERY THE DB
-        LocalDate today = LocalDate.now();
-        int day = today.getDayOfMonth();
-        // Type Month being an enum we will need to convert it to an int to be able to use it in our query
-        Month month = today.getMonth();
-        int year = today.getYear();
+        String sqlQuery = "SELECT id, givenName, familyName, birthdate FROM birthdays WHERE EXTRACT(MONTH FROM birthdate) = ? AND EXTRACT(DAY FROM birthdate) = ?";
+        ArrayList<BirthdaysManager> listOfBirthdays = new ArrayList<>();
 
-        try(Connection connection = getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sqlQuery){
-                pstmt.setInt(1, month.getValue());
-                pstmt.setInt(2, day);
-        });
+        int day = date.getDayOfMonth();
+        int month = date.getMonthValue();
 
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
 
+            pstmt.setInt(1, month);
+            pstmt.setInt(2, day);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    BirthdaysManager newBirthday = new BirthdaysManager();
+                    newBirthday.setGivenName(rs.getString("givenName"));
+                    newBirthday.setFamilyName(rs.getString("familyName"));
+                    Date sqlDate = rs.getDate("birthdate");
+                    LocalDate birthdate = sqlDate.toLocalDate();
+                    newBirthday.setBirthdate(birthdate);
+                    listOfBirthdays.add(newBirthday);
+                }
+            }
+
+            return listOfBirthdays;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error occurred", e);
+        } catch (Exception e) {
+            throw new RuntimeException("An unexpected error occurred", e);
+        }
     }
-
 
 }

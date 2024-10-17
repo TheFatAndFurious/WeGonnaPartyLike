@@ -1,11 +1,12 @@
 package base;
 
+import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class TaSoeur {
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException {
         System.out.println("Alive and well");
 
         Scanner scanner = new Scanner(System.in);
@@ -29,5 +30,10 @@ public class TaSoeur {
         Database.insertData(birthdayJulie);
         System.out.println("test");
         Database.queryData();
+        System.out.println("retest");
+        var results = Database.queryDataByDates(LocalDate.now());
+        for(BirthdaysManager one : results){
+            System.out.println(one.givenName + " " + one.familyName + " is " + one.birthdate);
+        }
     }
 }
