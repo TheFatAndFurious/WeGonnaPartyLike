@@ -45,7 +45,6 @@ public class Database {
     }
 
     public static void queryData(){
-        //String sql = "SELECT givenName, familyName, birthdate FROM birthdays WHERE birthdate = (?)";
         String sql = "SELECT * from birthdays";
 
         try (Connection conn = getConnection();
@@ -63,4 +62,12 @@ public class Database {
             throw new RuntimeException(e);
         }
     }
+
+    public static BirthdaysManager[] queryDataByDates(){
+        String sqlQuery = "SELECT givenName, familyName, birthdate FROM birthdays WHERE EXTRACT(MONTH FROM birthdate) = ? AND EXTRACT (DAY FROM birthdate) = ?";
+
+
+    }
+
+
 }
