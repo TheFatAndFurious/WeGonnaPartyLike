@@ -27,3 +27,17 @@ CREATE TABLE IF NOT EXISTS birthdays (id INT AUTO_INCREMENT PRIMARY KEY, givenNa
 2024-10-16 17:36:01 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS birthdays (id INT AUTO_INCREMENT PRIMARY KEY, givenName VARCHAR (255) NOT NULL, familyName VARCHAR (255) NOT NULL, birthdate DATE NOT NULL, [*]);"; expected "identifier"; SQL statement:
 CREATE TABLE IF NOT EXISTS birthdays (id INT AUTO_INCREMENT PRIMARY KEY, givenName VARCHAR (255) NOT NULL, familyName VARCHAR (255) NOT NULL, birthdate DATE NOT NULL, ); [42001-220]
+2024-10-17 23:52:52 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Method is only allowed for a query. Use execute or executeUpdate instead of executeQuery; SQL statement:
+DELETE FROM birthdays WHERE id = ? [90002-220]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.command.Prepared.query(Prepared.java:256)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:252)
+	at org.h2.command.Command.executeQuery(Command.java:191)
+	at org.h2.jdbc.JdbcPreparedStatement.executeQuery(JdbcPreparedStatement.java:128)
+	at base.Database.deleteData(Database.java:74)
+	at base.TaSoeur.main(TaSoeur.java:39)

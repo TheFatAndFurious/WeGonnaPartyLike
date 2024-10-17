@@ -2,7 +2,6 @@ package base;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 
 public class Database {
@@ -65,9 +64,21 @@ public class Database {
         }
     }
 
-    // Here we want the function to return an array of Birthdaysmanager if there's any
-    // It is the function that will be run automatically each day to check if there's any birthdays
-    public static ArrayList<BirthdaysManager> queryDataByDates(LocalDate date) {
+    public static void deleteData(int id){
+        String sqlQuery = "DELETE FROM birthdays WHERE id = ?";
+
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+
+                preparedStatement.setInt(1, id);
+                preparedStatement.executeUpdate();
+                System.out.println("user has been deleted");
+        } catch (Exception e) {
+            throw new RuntimeException("Something unexpected happened", e);
+        }
+    }
+
+    public static ArrayList<BirthdaysManager> queryDataByDate(LocalDate date) {
         if (date == null) {
             throw new IllegalArgumentException("Date parameter cannot be null");
         }
