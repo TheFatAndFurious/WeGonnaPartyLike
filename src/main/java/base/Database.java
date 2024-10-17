@@ -2,6 +2,7 @@ package base;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.Month;
 
 public class Database {
     private static final String JDBC_url = "jdbc:h2:./data/database";
@@ -65,8 +66,21 @@ public class Database {
 
     // Here we want the function to return an array of Birthdaysmanager if there's any
     // It is the function that will be run automatically each day to check if there's any birthdays
-    public static BirthdaysManager[] queryDataByDates(){
+    public static BirthdaysManager[] queryDataByDates() throws SQLException {
         String sqlQuery = "SELECT givenName, familyName, birthdate FROM birthdays WHERE EXTRACT(MONTH FROM birthdate) = ? AND EXTRACT (DAY FROM birthdate) = ?";
+
+       // EXTRACTING VALUES FROM TODAY'S DATE SO WE CAN USE IT TO QUERY THE DB
+        LocalDate today = LocalDate.now();
+        int day = today.getDayOfMonth();
+        // Type Month being an enum we will need to convert it to an int to be able to use it in our query
+        Month month = today.getMonth();
+        int year = today.getYear();
+
+        try(Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sqlQuery){
+                pstmt.setInt(1, month.getValue());
+                pstmt.setInt(2, day);
+        });
 
 
     }
