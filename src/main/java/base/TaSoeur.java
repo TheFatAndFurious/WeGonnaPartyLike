@@ -26,18 +26,18 @@ public class TaSoeur {
         int yearOfBirth = scanner.nextInt();
         LocalDate date = LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth);
         birthdayJulie.setBirthdate(date);
-        Database.insertData(birthdayJulie);
+        Database.addBirthday(birthdayJulie);
         System.out.println("test");
-        Database.queryData();
+        Database.getAllBirthdays();
         System.out.println("retest");
-        var results = Database.queryDataByDate(LocalDate.now());
+        var results = Database.getBirthdaysByDate(LocalDate.now());
         for(BirthdaysManager one : results){
             System.out.println(one.givenName + " " + one.familyName + " is " + one.birthdate);
         }
         System.out.println("delete");
         int user2delete = scanner.nextInt();
-        Database.deleteData(user2delete);
-        var results2 = Database.queryDataByDate(LocalDate.now());
+        Database.deleteBirthday(user2delete);
+        var results2 = Database.getBirthdaysByDate(LocalDate.now());
         for(BirthdaysManager one : results2){
             System.out.println(one.givenName + " " + one.familyName + " is " + one.birthdate);
         }

@@ -30,7 +30,7 @@ public class Database {
         }
     }
 
-    public static void insertData(BirthdaysManager newEntry){
+    public static void addBirthday(BirthdaysManager newEntry){
         String sql = "INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?)";
 
         try (Connection conn = getConnection();
@@ -45,7 +45,7 @@ public class Database {
         }
     }
 
-    public static void queryData(){
+    public static void getAllBirthdays(){
         String sql = "SELECT * from birthdays";
 
         try (Connection conn = getConnection();
@@ -64,7 +64,7 @@ public class Database {
         }
     }
 
-    public static void deleteData(int id){
+    public static void deleteBirthday(int id){
         String sqlQuery = "DELETE FROM birthdays WHERE id = ?";
 
         try(Connection connection = getConnection();
@@ -78,7 +78,7 @@ public class Database {
         }
     }
 
-    public static ArrayList<BirthdaysManager> queryDataByDate(LocalDate date) {
+    public static ArrayList<BirthdaysManager> getBirthdaysByDate(LocalDate date) {
         if (date == null) {
             throw new IllegalArgumentException("Date parameter cannot be null");
         }
@@ -114,6 +114,10 @@ public class Database {
         } catch (Exception e) {
             throw new RuntimeException("An unexpected error occurred", e);
         }
+    }
+
+    public static void updateBirthday(int userId){
+        String sqlQuery = "UPDATE birthdays "
     }
 
 }
