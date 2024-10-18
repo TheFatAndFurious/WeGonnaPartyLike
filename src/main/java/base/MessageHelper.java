@@ -6,12 +6,14 @@ public class MessageHelper {
         System.out.println(message);
     }
 
-    public static void PrintFormattedMessage(String message, Object... args){
-        System.out.println(String.format(message, args));
+    public static void PrintFormattedMessage(Messages messageEnum, Object... args){
+        String formattedMessage = String.format(messageEnum.getTemplate(), args);
+        System.out.println(formattedMessage);
     }
 
-    public static void PrintErrorMessage(String message, Exception e){
-        System.out.println("ERROR: " + message);
+    public static void PrintErrorMessage(Messages messageEnum, Exception e){
+        String formattedMessage = "ERROR: " + messageEnum.getTemplate();
+        System.out.println(formattedMessage);
         if (e != null){
             e.printStackTrace(System.err);
         }
