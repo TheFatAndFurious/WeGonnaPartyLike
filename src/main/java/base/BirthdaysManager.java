@@ -4,9 +4,19 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class BirthdaysManager {
+
+    Integer id;
     String givenName;
     String familyName;
     LocalDate birthdate;
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 
     public String getGivenName() {
         return givenName;

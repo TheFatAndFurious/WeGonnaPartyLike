@@ -39,29 +39,33 @@ public class Database {
                 preparedStatement.setString(2, newEntry.familyName);
                 preparedStatement.setObject(3, newEntry.birthdate);
                 preparedStatement.executeUpdate();
-                MessageHelper.PrintFormattedMessage("%s %s birthday has been added successfully", newEntry.getGivenName(), newEntry.familyName);
+                MessageHelper.PrintFormattedMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY, newEntry.getGivenName(), newEntry.familyName);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void getAllBirthdays(){
-        String sql = "SELECT * from birthdays";
+    public static ArrayList<BirthdaysManager> getAllBirthdays(){
+
+        ArrayList<BirthdaysManager> listOfBirthdays = new ArrayList<>();
+        String sql = "SELECT id, givenName, familyName, birthdate from birthdays";
 
         try (Connection conn = getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(sql)){
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()){
-                int id = rs.getInt("id");
-                String name = rs.getString("givenName");
-                String familyName = rs.getString("familyName");
-                var birthdate = rs.getObject("birthdate");
-                System.out.println(name + " " + familyName + " birthday is " + birthdate) ;
+                BirthdaysManager user = new BirthdaysManager();
+                user.setId(rs.getInt("id"));
+                user.setGivenName(rs.getString("givenName")) ;
+                user.setFamilyName(rs.getString("familyName"));
+                user.setBirthdate(rs.getDate("birthdate").toLocalDate());
+                listOfBirthdays.add(user);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return listOfBirthdays;
     }
 
     public static void deleteBirthday(int id){
