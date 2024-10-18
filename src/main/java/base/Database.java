@@ -39,7 +39,7 @@ public class Database {
                 preparedStatement.setString(2, newEntry.familyName);
                 preparedStatement.setObject(3, newEntry.birthdate);
                 preparedStatement.executeUpdate();
-                System.out.println("Birthday inserted successfully");
+                MessageHelper.PrintFormattedMessage("%s %s birthday has been added successfully", newEntry.getGivenName(), newEntry.familyName);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
