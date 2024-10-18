@@ -116,8 +116,20 @@ public class Database {
         }
     }
 
-    public static void updateBirthday(int userId){
-        String sqlQuery = "UPDATE birthdays "
+    public static void updateBirthday(BirthdaysManager updatedUser, int id){
+        String sqlQuery = "UPDATE birthdays SET givenName = ?, familyName = ?, birthdate = ? where ID = ?";
+
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)){
+            preparedStatement.setString(1, updatedUser.getGivenName());
+            preparedStatement.setString(2, updatedUser.getFamilyName());
+            preparedStatement.setDate(3, java.sql.Date.valueOf(updatedUser.getBirthdate()));
+            preparedStatement.setInt(4, id);
+            preparedStatement.executeUpdate();
+            System.out.println("Updated successfully user " + updatedUser.getGivenName() + " " + updatedUser.getFamilyName());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
