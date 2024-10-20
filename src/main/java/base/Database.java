@@ -1,19 +1,20 @@
 package base;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Database {
-    private static final String JDBC_url = "jdbc:h2:./data/database";
-    private static final String USER = "User";
-    private static final String PASSWORD = "secretStuff";
+    private DataSource dataSource;
+    private MessageHelper messageHelper;
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(JDBC_url, USER, PASSWORD);
+    public Database(DataSource dataSource, MessageHelper messageHelper){
+        this.dataSource = dataSource;
+        this.messageHelper = messageHelper;
     }
 
-    public static void createTable() {
+    public void createTable() {
         String sql = "CREATE TABLE IF NOT EXISTS birthdays (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "givenName VARCHAR (255) NOT NULL, " +
@@ -22,7 +23,7 @@ public class Database {
                     ");";
 
         try {
-            Connection conn = getConnection();
+            Connection conn = dataSource.getConnection();
             Statement smt = conn.createStatement();
             smt.execute(sql);
         } catch (SQLException e) {
@@ -30,10 +31,10 @@ public class Database {
         }
     }
 
-    public static void addBirthday(BirthdaysManager newEntry){
+    public void addBirthday(BirthdaysManager newEntry){
         String sql = "INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?)";
 
-        try (Connection conn = getConnection();
+        try (Connection conn = dataSource.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(sql)){
                 preparedStatement.setString(1, newEntry.givenName);
                 preparedStatement.setString(2, newEntry.familyName);
@@ -45,12 +46,12 @@ public class Database {
         }
     }
 
-    public static ArrayList<BirthdaysManager> getAllBirthdays(){
+    public ArrayList<BirthdaysManager> getAllBirthdays(){
 
         ArrayList<BirthdaysManager> listOfBirthdays = new ArrayList<>();
         String sql = "SELECT id, givenName, familyName, birthdate from birthdays";
 
-        try (Connection conn = getConnection();
+        try (Connection conn = dataSource.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(sql)){
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -68,10 +69,10 @@ public class Database {
         return listOfBirthdays;
     }
 
-    public static void deleteBirthday(int id){
+    public void deleteBirthday(int id){
         String sqlQuery = "DELETE FROM birthdays WHERE id = ?";
 
-        try(Connection connection = getConnection();
+        try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
 
                 preparedStatement.setInt(1, id);
@@ -120,10 +121,10 @@ public class Database {
         }
     }
 
-    public static void updateBirthday(BirthdaysManager updatedUser, int id){
+    public void updateBirthday(BirthdaysManager updatedUser, int id){
         String sqlQuery = "UPDATE birthdays SET givenName = ?, familyName = ?, birthdate = ? where ID = ?";
 
-        try(Connection connection = getConnection();
+        try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)){
             preparedStatement.setString(1, updatedUser.getGivenName());
             preparedStatement.setString(2, updatedUser.getFamilyName());
