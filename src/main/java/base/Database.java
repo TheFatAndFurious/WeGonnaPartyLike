@@ -31,16 +31,25 @@ public class Database {
         }
     }
 
-    public void addBirthday(BirthdaysManager newEntry){
+    public BirthdaysManager addBirthday(BirthdaysManager newEntry){
         String sql = "INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement(sql)){
+            PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
                 preparedStatement.setString(1, newEntry.givenName);
                 preparedStatement.setString(2, newEntry.familyName);
                 preparedStatement.setObject(3, newEntry.birthdate);
                 preparedStatement.executeUpdate();
-                MessageHelper.PrintFormattedMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY, newEntry.getGivenName(), newEntry.familyName);
+
+                try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()){
+                    if (generatedKeys.next()) {
+                        newEntry.setId(generatedKeys.getInt(1));
+                    } else {
+                        throw new SQLException("Created birthday failed, no ID created");
+                    }
+                }
+            messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY, newEntry.getGivenName(), newEntry.familyName);
+            return newEntry;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -83,7 +92,7 @@ public class Database {
         }
     }
 
-    public static ArrayList<BirthdaysManager> getBirthdaysByDate(LocalDate date) {
+    public ArrayList<BirthdaysManager> getBirthdaysByDate(LocalDate date) {
         if (date == null) {
             throw new IllegalArgumentException("Date parameter cannot be null");
         }
@@ -94,8 +103,8 @@ public class Database {
         int day = date.getDayOfMonth();
         int month = date.getMonthValue();
 
-        try (Connection connection = getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setInt(1, month);
             pstmt.setInt(2, day);

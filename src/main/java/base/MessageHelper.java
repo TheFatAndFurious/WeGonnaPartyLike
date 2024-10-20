@@ -2,16 +2,16 @@ package base;
 
 public class MessageHelper {
 
-    public static void PrintMessage(String message) {
+    public void PrintMessage(String message) {
         System.out.println(message);
     }
 
-    public static void PrintFormattedMessage(Messages messageEnum, Object... args){
+    public void PrintFormattedMessage(Messages messageEnum, Object... args){
         String formattedMessage = String.format(messageEnum.getTemplate(), args);
         System.out.println(formattedMessage);
     }
 
-    public static void PrintErrorMessage(Messages messageEnum, Exception e){
+    public void PrintErrorMessage(Messages messageEnum, Exception e){
         String formattedMessage = "ERROR: " + messageEnum.getTemplate();
         System.out.println(formattedMessage);
         if (e != null){
