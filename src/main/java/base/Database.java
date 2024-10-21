@@ -78,15 +78,22 @@ public class Database {
         return listOfBirthdays;
     }
 
-    public void deleteBirthday(int id){
+    public boolean deleteBirthday(int id){
         String sqlQuery = "DELETE FROM birthdays WHERE id = ?";
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
 
                 preparedStatement.setInt(1, id);
-                preparedStatement.executeUpdate();
-                System.out.println("user has been deleted");
+                int affectedRows = preparedStatement.executeUpdate();
+
+                if(affectedRows > 0){
+                    messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_DELETED_SUCCESSFULLY);
+                    return true;
+                } else {
+                    messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_DELETED_FAILURE);
+                    return false;
+                }
         } catch (Exception e) {
             throw new RuntimeException("Something unexpected happened", e);
         }
