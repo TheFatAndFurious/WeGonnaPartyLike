@@ -5,7 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class DatabaseTest {
     private Database database;
@@ -20,5 +27,16 @@ public class DatabaseTest {
     }
 
     @Test
+    public void testAddBirthDay() throws SQLException {
+        BirthdaysManager newEntry = new BirthdaysManager();
+        newEntry.setGivenName("David");
+        newEntry.setFamilyName("Bowie");
+        newEntry.setBirthdate(LocalDate.of(1990,6,6));
 
+        Connection mockConnection = mock(Connection.class);
+        PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
+        ResultSet mockResultSet = mock(ResultSet.class);
+
+        when(dataSource.getConnection()).thenReturn(mockConnection)
+    }
 }
