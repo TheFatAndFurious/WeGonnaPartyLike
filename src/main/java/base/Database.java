@@ -137,7 +137,7 @@ public class Database {
         }
     }
 
-    public void updateBirthday(BirthdaysManager updatedUser, int id){
+    public boolean updateBirthday(BirthdaysManager updatedUser, int id){
         String sqlQuery = "UPDATE birthdays SET givenName = ?, familyName = ?, birthdate = ? where ID = ?";
 
         try(Connection connection = dataSource.getConnection();
@@ -146,8 +146,15 @@ public class Database {
             preparedStatement.setString(2, updatedUser.getFamilyName());
             preparedStatement.setDate(3, java.sql.Date.valueOf(updatedUser.getBirthdate()));
             preparedStatement.setInt(4, id);
-            preparedStatement.executeUpdate();
-            System.out.println("Updated successfully user " + updatedUser.getGivenName() + " " + updatedUser.getFamilyName());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows > 0){
+                messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_UPDATED_SUCCESSFULLY, updatedUser.getGivenName(), updatedUser.getFamilyName());
+                return true;
+            } else {
+                messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_UPDATE_FAILURE, updatedUser.getGivenName(), updatedUser.getFamilyName());
+                return false;
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
