@@ -29,7 +29,7 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testDeleteBirthday() throws SQLException {
+    public void testDeleteBirthdaySuccess() throws SQLException {
         int idToDelete = 1;
 
         Connection mockConnection = mock(Connection.class);
@@ -53,7 +53,25 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testAddBirthDay() throws SQLException {
+    public void testDeleteBirthdayFailure(){}
+    // TODO: implement method
+
+
+    //    ============ WIP ===================
+    @Test
+    public void testGetAllBirthdaysSuccess() throws SQLException {
+
+        Connection mockConnection = mock(dataSource.getConnection());
+        PreparedStatement mockPrepareStatement = mock(PreparedStatement.class);
+        ResultSet mockResultSet = mock(ResultSet.class);
+    }
+
+    @Test
+    public void testGetAllBirthdaysFailure(){}
+    // TODO: implement method
+
+    @Test
+    public void testAddBirthDaySuccess() throws SQLException {
         BirthdaysManager newEntry = new BirthdaysManager();
         newEntry.setGivenName("David");
         newEntry.setFamilyName("Bowie");
@@ -73,6 +91,29 @@ public class DatabaseTest {
 
         assertNotNull(result);
         assertEquals(1, result.getId());
+        verify(mockConnection.prepareStatement("INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?)"))
         verify(messageHelper).PrintFormattedMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY, "David", "Bowie");
     }
+
+    @Test
+    public void testAddBirthdayFailure(){}
+    // TODO: implement method
+
+    @Test
+    public void testUpdateBirthdaySuccess(){}
+    // TODO: implement method
+
+    @Test
+    public void testUpdateBirthdayFailure(){}
+    // TODO: implement method
+
+    @Test
+    public void testGetBirthdayByDateSuccess(){}
+    // TODO: implement method
+
+    @Test
+    public void testGetBirthdayByDateFailure(){}
+    // TODO: implement method
+
+
 }
