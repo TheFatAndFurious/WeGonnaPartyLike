@@ -1,6 +1,8 @@
 package base;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class ConsoleInputHelper implements InputHelper {
@@ -33,6 +35,15 @@ public class ConsoleInputHelper implements InputHelper {
 
     @Override
     public LocalDate getInputLocalDate(LocalDate prompt) {
-        return null;
+        System.out.println(prompt + " ");
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        while(true){
+            String input = scanner.nextLine().trim();
+            try{
+                return LocalDate.parse(input);
+            } catch (DateTimeParseException e){
+                System.out.println("Invalid date format. Please use YYYY-MM-DD");
+            }
+        }
     }
 }
