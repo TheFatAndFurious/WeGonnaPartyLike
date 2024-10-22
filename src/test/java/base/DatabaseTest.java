@@ -11,8 +11,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class DatabaseTest {
     private Database database;
@@ -37,6 +40,16 @@ public class DatabaseTest {
         PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
         ResultSet mockResultSet = mock(ResultSet.class);
 
-        when(dataSource.getConnection()).thenReturn(mockConnection)
+        when(dataSource.getConnection()).thenReturn(mockConnection);
+        when(mockConnection.prepareStatement(anyString(), anyInt())).thenReturn(mockPreparedStatement);
+        when(mockPreparedStatement.getGeneratedKeys()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(true);
+        when(mockResultSet.getInt(1)).thenReturn(1);
+
+        BirthdaysManager result = database.addBirthday(newEntry);
+
+        assertNotNull(result);
+        assertEquals(1, result.getId());
+        verify(messageHelper).PrintFormattedMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY, "David", "Bowie");
     }
 }
