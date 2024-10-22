@@ -20,7 +20,15 @@ public class ConsoleInputHelper implements InputHelper {
 
     @Override
     public int getInputInteger(String prompt) {
-        return 0;
+        System.out.println(prompt + " ");
+        while (true){
+        String input = scanner.nextLine().trim();
+        try{
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Input must be integer. " + prompt + " ");;
+        }
+        }
     }
 
     @Override
