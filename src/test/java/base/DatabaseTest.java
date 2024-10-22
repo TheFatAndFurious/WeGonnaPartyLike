@@ -11,8 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -27,6 +26,30 @@ public class DatabaseTest {
         dataSource = mock(DataSource.class);
         messageHelper = mock(MessageHelper.class);
         database = new Database(dataSource, messageHelper);
+    }
+
+    @Test
+    public void testDeleteBirthday() throws SQLException {
+        int idToDelete = 1;
+
+        Connection mockConnection = mock(Connection.class);
+        PreparedStatement mockPreparedStatement = mock(PreparedStatement.class);
+
+        when(dataSource.getConnection()).thenReturn(mockConnection);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
+        when(mockPreparedStatement.executeUpdate()).thenReturn(1);
+
+        boolean result = database.deleteBirthday(1);
+
+        assertTrue(result);
+
+        verify(mockConnection).prepareStatement("DELETE FROM birthdays WHERE id = ?");
+        verify(mockPreparedStatement).setInt(1, idToDelete);
+        verify(mockPreparedStatement).executeUpdate();
+        verify(messageHelper).PrintFormattedMessage(Messages.BIRTHDAY_DELETED_SUCCESSFULLY);
+
+        verify(mockPreparedStatement).close();
+        verify(mockConnection).close();
     }
 
     @Test
