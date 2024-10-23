@@ -22,6 +22,11 @@ public class AddBirthdayCommand implements Command{
         String inputGivenName = inputHelper.getInputString(givenName);
         String inputFamilyName = inputHelper.getInputString(familyName);
         LocalDate inputBirthdate = inputHelper.getInputLocalDate(birthdate);
-        
+
+        BirthdaysManager newEntry = new BirthdaysManager();
+        newEntry.setGivenName(inputGivenName);
+        newEntry.setFamilyName(inputFamilyName);
+        newEntry.setBirthdate(inputBirthdate);
+        database.addBirthday(newEntry);
     }
 }
