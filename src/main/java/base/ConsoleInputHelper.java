@@ -34,7 +34,7 @@ public class ConsoleInputHelper implements InputHelper {
     }
 
     @Override
-    public LocalDate getInputLocalDate(LocalDate prompt) {
+    public LocalDate getInputLocalDate(String prompt) {
         System.out.println(prompt + " ");
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
         while(true){

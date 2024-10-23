@@ -91,7 +91,7 @@ public class DatabaseTest {
 
         assertNotNull(result);
         assertEquals(1, result.getId());
-        verify(mockConnection.prepareStatement("INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?)"))
+        verify(mockConnection.prepareStatement("INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?)"));
         verify(messageHelper).PrintFormattedMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY, "David", "Bowie");
     }
 
