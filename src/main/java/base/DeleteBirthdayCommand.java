@@ -16,7 +16,14 @@ public class DeleteBirthdayCommand implements Command{
 
     @Override
     public void execute() {
-        String idToDelete = inputHelper.getInputInteger(messageHelper.)
+        String idToDelete = messageHelper.PrintFormattedMessage(Messages.ID_TO_DELETE);
+        String confirmIdToDelete = messageHelper.PrintFormattedMessage(Messages.CONFIRM_ID_TO_DELETE);
+        String wrongConfirmation = messageHelper.PrintFormattedMessage(Messages.ID_TO_DELETE_NOT_MATCHING);
+
+        String inputIdToDelete = inputHelper.getInputString(idToDelete);
+        String inputConfirmIdToDelete = inputHelper.getInputString(confirmIdToDelete);
+
+
 
     }
 }
