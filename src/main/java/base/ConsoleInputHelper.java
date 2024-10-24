@@ -24,9 +24,9 @@ public class ConsoleInputHelper implements InputHelper {
     public int getInputInteger(String prompt) {
         System.out.println(prompt + " ");
         while (true){
-        String input = scanner.nextLine().trim();
+        int input = scanner.nextInt();
         try{
-            return Integer.parseInt(input);
+            return input;
         } catch (NumberFormatException e) {
             System.out.println("Input must be integer. " + prompt + " ");;
         }

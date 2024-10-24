@@ -20,10 +20,19 @@ public class DeleteBirthdayCommand implements Command{
         String confirmIdToDelete = messageHelper.PrintFormattedMessage(Messages.CONFIRM_ID_TO_DELETE);
         String wrongConfirmation = messageHelper.PrintFormattedMessage(Messages.ID_TO_DELETE_NOT_MATCHING);
 
-        String inputIdToDelete = inputHelper.getInputString(idToDelete);
-        String inputConfirmIdToDelete = inputHelper.getInputString(confirmIdToDelete);
 
-
+        boolean inputsMatching = false;
+        int inputIdToDelete = 0;
+        while (!inputsMatching) {
+            inputIdToDelete = inputHelper.getInputInteger(idToDelete);
+            int inputConfirmIdToDelete = inputHelper.getInputInteger(confirmIdToDelete);
+            if(inputIdToDelete == inputConfirmIdToDelete){
+                inputsMatching = true;
+            } else {
+                System.out.println(messageHelper.PrintFormattedMessage(Messages.ID_TO_DELETE_NOT_MATCHING));
+            }
+        }
+        database.deleteBirthday(inputIdToDelete);
 
     }
 }
