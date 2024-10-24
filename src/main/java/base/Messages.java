@@ -8,7 +8,10 @@ public enum Messages {
     BIRTHDAY_DELETED_FAILURE("Failed to delete birthday"),
     ENTER_GIVEN_NAME("Please enter a given name"),
     ENTER_FAMILY_NAME("Please enter family name"),
-    ENTER_BIRTHDATE("Please enter a birthdate: YYYY-MM-DD");
+    ENTER_BIRTHDATE("Please enter a birthdate: YYYY-MM-DD"),
+    ID_TO_DELETE("Please enter id to delete"),
+    CONFIRM_ID_TO_DELETE("Please confirm ID to delete"),
+    ID_TO_DELETE_NOT_MATCHING("Ids are not matching, please re-enter an ID to delete");
 
     private final String template;
 
