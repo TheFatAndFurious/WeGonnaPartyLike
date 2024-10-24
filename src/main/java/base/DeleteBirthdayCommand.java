@@ -18,7 +18,6 @@ public class DeleteBirthdayCommand implements Command{
     public void execute() {
         String idToDelete = messageHelper.PrintFormattedMessage(Messages.ID_TO_DELETE);
         String confirmIdToDelete = messageHelper.PrintFormattedMessage(Messages.CONFIRM_ID_TO_DELETE);
-        String wrongConfirmation = messageHelper.PrintFormattedMessage(Messages.ID_TO_DELETE_NOT_MATCHING);
 
 
         boolean inputsMatching = false;

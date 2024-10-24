@@ -88,10 +88,10 @@ public class Database {
                 int affectedRows = preparedStatement.executeUpdate();
 
                 if(affectedRows > 0){
-                    messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_DELETED_SUCCESSFULLY);
+                    System.out.println(messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_DELETED_SUCCESSFULLY));
                     return true;
                 } else {
-                    messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_DELETED_FAILURE);
+                    System.out.println(messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_DELETED_FAILURE));
                     return false;
                 }
         } catch (Exception e) {

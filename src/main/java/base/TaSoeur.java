@@ -15,9 +15,11 @@ public class TaSoeur {
         MessageHelper messageHelper = new MessageHelper();
         DataSource dataSource = new SimpleDataSource(jdbcUrl, username, password);
         Database database = new Database(dataSource, messageHelper);
-        // AddBirthdayCommand addBirthdayCommand = new AddBirthdayCommand(database, messageHelper, inputHelper);
-        // addBirthdayCommand.execute();
-        DeleteBirthdayCommand deleteBirthdayCommand = new DeleteBirthdayCommand(messageHelper, inputHelper, database);
-        deleteBirthdayCommand.execute();
+        database.createTable();
+        AddBirthdayCommand addBirthdayCommand = new AddBirthdayCommand(database, messageHelper, inputHelper);
+        addBirthdayCommand.execute();
+        ListBirthdaysCommand listBirthdaysCommand = new ListBirthdaysCommand(database, messageHelper);
+        listBirthdaysCommand.execute();
+
     }
 }

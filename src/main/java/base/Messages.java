@@ -11,7 +11,9 @@ public enum Messages {
     ENTER_BIRTHDATE("Please enter a birthdate: YYYY-MM-DD"),
     ID_TO_DELETE("Please enter id to delete"),
     CONFIRM_ID_TO_DELETE("Please confirm ID to delete"),
-    ID_TO_DELETE_NOT_MATCHING("Ids are not matching, please re-enter an ID to delete");
+    ID_TO_DELETE_NOT_MATCHING("Ids are not matching, please re-enter an ID to delete"),
+    DATABASE_EMPTY("Database is empty, no birthdays to display"),
+    BIRTHDAYS_LIST("===== BIRTHDAYS =====");
 
     private final String template;
 
