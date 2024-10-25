@@ -20,7 +20,7 @@ public class ListBirthdaysCommand implements Command{
                 System.out.println(messageHelper.PrintFormattedMessage(Messages.DATABASE_EMPTY));
             } else {
                 for (BirthdaysManager users : birthdays){
-                    System.out.println(users.getGivenName() + " " + users.getFamilyName() + " " + "is on the: " + users.getBirthdate());
+                    System.out.println(users.getId() + " -- " + users.getGivenName() + " " + users.getFamilyName() + " -- " + users.getBirthdate());
                 }
             }
     }

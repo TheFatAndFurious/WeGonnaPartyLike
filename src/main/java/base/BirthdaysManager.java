@@ -3,7 +3,7 @@ package base;
 import java.time.LocalDate;
 
 public class BirthdaysManager {
-
+// TODO: Rewrite getters/setters
     Integer id;
     String givenName;
     String familyName;

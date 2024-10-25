@@ -20,6 +20,7 @@ public class TaSoeur {
         addBirthdayCommand.execute();
         ListBirthdaysCommand listBirthdaysCommand = new ListBirthdaysCommand(database, messageHelper);
         listBirthdaysCommand.execute();
-
+        DeleteBirthdayCommand deleteBirthdayCommand = new DeleteBirthdayCommand(messageHelper, inputHelper, database);
+        deleteBirthdayCommand.execute();
     }
 }
