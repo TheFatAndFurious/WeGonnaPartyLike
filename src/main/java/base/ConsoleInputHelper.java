@@ -17,8 +17,19 @@ public class ConsoleInputHelper implements InputHelper {
             System.out.println("Input can not be empty");
             input = scanner.nextLine().trim();
         }
-        return input;
-    }
+        boolean isString = false;
+        while (!isString){
+            try{
+                Integer.parseInt(input);
+                System.out.println("Input can not be numeric");
+                input = scanner.nextLine().trim();
+            } catch (NumberFormatException e) {
+                isString = true;
+            }
+            }
+                return input;
+        }
+
 
     @Override
     public int getInputInteger(String prompt) {
@@ -47,3 +58,5 @@ public class ConsoleInputHelper implements InputHelper {
         }
     }
 }
+
+
