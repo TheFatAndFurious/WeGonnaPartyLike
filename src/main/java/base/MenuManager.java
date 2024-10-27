@@ -1,8 +1,12 @@
 package base;
 
+import java.util.Scanner;
+
 public class MenuManager {
     InputHelper inputHelper;
     MessageHelper messageHelper;
+    Scanner scanner = new Scanner(System.in);
+    Command command;
 
     public MenuManager(InputHelper inputHelper, MessageHelper messageHelper){
         this.inputHelper = inputHelper;
@@ -10,6 +14,8 @@ public class MenuManager {
 
     }
         public void run(){
-            System.out.println("Welcome my guy");
+            int userChoice = inputHelper.getInputInteger("Choose an action");
+
+
         }
 }
