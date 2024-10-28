@@ -1,13 +1,12 @@
 package base;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class MenuManager {
     InputHelper inputHelper;
     MessageHelper messageHelper;
-    Scanner scanner = new Scanner(System.in);
-    Command command;
-
+    Map<Integer, MenuOption> menuOptionMap;
     public MenuManager(InputHelper inputHelper, MessageHelper messageHelper){
         this.inputHelper = inputHelper;
         this.messageHelper = messageHelper;
