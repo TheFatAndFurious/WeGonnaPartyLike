@@ -2,8 +2,6 @@ package base;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Scanner;
 
 public class TaSoeur {
     public static void main(String[] args) throws SQLException {
@@ -16,13 +14,7 @@ public class TaSoeur {
         DataSource dataSource = new SimpleDataSource(jdbcUrl, username, password);
         Database database = new Database(dataSource, messageHelper);
         database.createTable();
-        AddBirthdayCommand addBirthdayCommand = new AddBirthdayCommand(database, messageHelper, inputHelper);
-        addBirthdayCommand.execute();
-        ListBirthdaysCommand listBirthdaysCommand = new ListBirthdaysCommand(database, messageHelper);
-        listBirthdaysCommand.execute();
-        DeleteBirthdayCommand deleteBirthdayCommand = new DeleteBirthdayCommand(messageHelper, inputHelper, database);
-        deleteBirthdayCommand.execute();
-        MenuManager menuManager = new MenuManager(inputHelper, messageHelper);
-        menuManager.run();
+        Application application = new Application(database, messageHelper, inputHelper);
+        application.start();
     }
 }

@@ -17,6 +17,7 @@ public class MenuManager {
         public void start(){
             boolean exit = false;
                 while(!exit){
+                    displayMenu();
                     int userChoice = inputHelper.getInputInteger("Choose an action");
                     if(userChoice == 0){
                         exit = true;
