@@ -13,7 +13,8 @@ public enum Messages {
     CONFIRM_ID_TO_DELETE("Please confirm ID to delete"),
     ID_TO_DELETE_NOT_MATCHING("Ids are not matching, please re-enter an ID to delete"),
     DATABASE_EMPTY("Database is empty, no birthdays to display"),
-    BIRTHDAYS_LIST("===== BIRTHDAYS =====");
+    BIRTHDAYS_LIST("===== BIRTHDAYS ====="),
+    GOODBYE("Goodbye!! See you soon!");
 
     private final String template;
 
