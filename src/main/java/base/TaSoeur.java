@@ -16,13 +16,13 @@ public class TaSoeur {
         DataSource dataSource = new SimpleDataSource(jdbcUrl, username, password);
         Database database = new Database(dataSource, messageHelper);
         database.createTable();
-        MenuManager menuManager = new MenuManager(inputHelper, messageHelper);
-        menuManager.run();
         AddBirthdayCommand addBirthdayCommand = new AddBirthdayCommand(database, messageHelper, inputHelper);
         addBirthdayCommand.execute();
         ListBirthdaysCommand listBirthdaysCommand = new ListBirthdaysCommand(database, messageHelper);
         listBirthdaysCommand.execute();
         DeleteBirthdayCommand deleteBirthdayCommand = new DeleteBirthdayCommand(messageHelper, inputHelper, database);
         deleteBirthdayCommand.execute();
+        MenuManager menuManager = new MenuManager(inputHelper, messageHelper);
+        menuManager.run();
     }
 }
