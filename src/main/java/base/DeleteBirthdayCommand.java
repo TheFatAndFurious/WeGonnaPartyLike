@@ -25,6 +25,7 @@ public class DeleteBirthdayCommand implements Command{
             inputIdToDelete = inputHelper.getInputInteger(idToDelete);
             int inputConfirmIdToDelete = inputHelper.getInputInteger(confirmIdToDelete);
             if(inputIdToDelete == inputConfirmIdToDelete){
+                messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_DELETED_SUCCESSFULLY);
                 inputsMatching = true;
             } else {
                 System.out.println(messageHelper.PrintFormattedMessage(Messages.ID_TO_DELETE_NOT_MATCHING));
