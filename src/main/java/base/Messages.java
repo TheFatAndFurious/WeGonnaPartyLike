@@ -5,7 +5,7 @@ public enum Messages {
     BIRTHDAY_UPDATED_SUCCESSFULLY("%s %s birthday has been updated successfully"),
     BIRTHDAY_UPDATE_FAILURE("%s %s birthday failed to update"),
     BIRTHDAY_DELETED_SUCCESSFULLY("Birthday has been deleted successfully"),
-    BIRTHDAY_DELETED_FAILURE("Failed to delete birthday"),
+    BIRTHDAY_DELETED_FAILURE("Failed to delete birthday: no matching ID"),
     ENTER_GIVEN_NAME("Please enter a given name"),
     ENTER_FAMILY_NAME("Please enter family name"),
     ENTER_BIRTHDATE("Please enter a birthdate: YYYY-MM-DD"),

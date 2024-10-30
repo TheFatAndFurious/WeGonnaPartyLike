@@ -45,6 +45,7 @@ public class Database {
                     if (generatedKeys.next()) {
                         newEntry.setId(generatedKeys.getInt(1));
                     } else {
+                        // TODO: refactor to get rid of exception throwing here
                         throw new SQLException("Created birthday failed, no ID created");
                     }
                 }
