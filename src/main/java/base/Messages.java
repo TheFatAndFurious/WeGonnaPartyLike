@@ -15,7 +15,8 @@ public enum Messages {
     DATABASE_EMPTY("Database is empty, no birthdays to display"),
     WELCOME("===== BIRTHDAYS ====="),
     GOODBYE("Goodbye!! See you soon!"),
-    WRONG_COMMAND("Wrong command, please try again");
+    WRONG_COMMAND("Wrong command, please try again"),
+    ADD_ANOTHER_BIRTHDAY("Do you wish to add another birthday ? y - N");
 
     private final String template;
 

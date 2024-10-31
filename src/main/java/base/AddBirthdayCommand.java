@@ -1,6 +1,7 @@
 package base;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class AddBirthdayCommand implements Command{
     private Database database;
@@ -18,15 +19,24 @@ public class AddBirthdayCommand implements Command{
         String givenName = messageHelper.PrintFormattedMessage(Messages.ENTER_GIVEN_NAME);
         String familyName = messageHelper.PrintFormattedMessage(Messages.ENTER_FAMILY_NAME);
         String birthdate = messageHelper.PrintFormattedMessage(Messages.ENTER_BIRTHDATE);
+        String addAnotherBirthday = messageHelper.PrintFormattedMessage(Messages.ADD_ANOTHER_BIRTHDAY);
+        boolean operationIsFinished = false;
 
-        String inputGivenName = inputHelper.getInputString(givenName);
-        String inputFamilyName = inputHelper.getInputString(familyName);
-        LocalDate inputBirthdate = inputHelper.getInputLocalDate(birthdate);
+        while(!operationIsFinished){
+            String inputGivenName = inputHelper.getInputString(givenName);
+            String inputFamilyName = inputHelper.getInputString(familyName);
+            LocalDate inputBirthdate = inputHelper.getInputLocalDate(birthdate);
 
-        BirthdaysManager newEntry = new BirthdaysManager();
-        newEntry.setGivenName(inputGivenName);
-        newEntry.setFamilyName(inputFamilyName);
-        newEntry.setBirthdate(inputBirthdate);
-        database.addBirthday(newEntry);
+            BirthdaysManager newEntry = new BirthdaysManager();
+            newEntry.setGivenName(inputGivenName);
+            newEntry.setFamilyName(inputFamilyName);
+            newEntry.setBirthdate(inputBirthdate);
+            database.addBirthday(newEntry);
+            String inputAddAnotherBirthday = inputHelper.getInputString(addAnotherBirthday);
+            if(Objects.equals(inputAddAnotherBirthday, "n")){
+                operationIsFinished = true;
+            }
+
+        }
     }
 }
