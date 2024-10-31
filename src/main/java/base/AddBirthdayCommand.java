@@ -31,7 +31,12 @@ public class AddBirthdayCommand implements Command{
             newEntry.setGivenName(inputGivenName);
             newEntry.setFamilyName(inputFamilyName);
             newEntry.setBirthdate(inputBirthdate);
-            database.addBirthday(newEntry);
+            try{
+                database.addBirthday(newEntry);
+                messageHelper.PrintMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY.getTemplate());
+            } catch (RuntimeException e) {
+                messageHelper.PrintFormattedMessage(Messages.ERROR_MESSAGE, e);
+            }
             String inputAddAnotherBirthday = inputHelper.getInputString(addAnotherBirthday);
             if(Objects.equals(inputAddAnotherBirthday, "n")){
                 operationIsFinished = true;

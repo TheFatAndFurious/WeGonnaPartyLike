@@ -31,7 +31,7 @@ public class Database {
         }
     }
 
-    public BirthdaysManager addBirthday(BirthdaysManager newEntry){
+    public BirthdaysManager addBirthday(BirthdaysManager newEntry) throws RuntimeException{
         String sql = "INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
@@ -49,7 +49,6 @@ public class Database {
                         throw new SQLException("Created birthday failed, no ID created");
                     }
                 }
-            messageHelper.PrintFormattedMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY, newEntry.getGivenName(), newEntry.familyName);
             return newEntry;
         } catch (SQLException e) {
             throw new RuntimeException(e);

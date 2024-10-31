@@ -16,7 +16,8 @@ public enum Messages {
     WELCOME("===== BIRTHDAYS ====="),
     GOODBYE("Goodbye!! See you soon!"),
     WRONG_COMMAND("Wrong command, please try again"),
-    ADD_ANOTHER_BIRTHDAY("Do you wish to add another birthday ? y - N");
+    ADD_ANOTHER_BIRTHDAY("Do you wish to add another birthday ? y - N"),
+    ERROR_MESSAGE("There was an error: %s");
 
     private final String template;
 
