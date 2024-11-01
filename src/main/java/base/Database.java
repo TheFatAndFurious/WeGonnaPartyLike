@@ -5,15 +5,28 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+
+/**
+ * Provides data access methods for birthdays entries including inserting, retrieving, updating and deleting
+ */
 public class Database {
     private DataSource dataSource;
     private MessageHelper messageHelper;
 
+    /**
+     * Constructs a new {@code Database} with the specified data source and message helper
+     * @param dataSource The data source for database connections
+     * @param messageHelper The message helper for displaying messages to users
+     */
     public Database(DataSource dataSource, MessageHelper messageHelper){
         this.dataSource = dataSource;
         this.messageHelper = messageHelper;
     }
 
+    /**
+     * Creates a new database if none exists
+     * @throws RuntimeException in case of failure to create a new database, it will be bubble up until it is caught and the program is exited as it is an unrecoverable error
+     */
     public void createTable() {
         String sql = "CREATE TABLE IF NOT EXISTS birthdays (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
@@ -27,7 +40,7 @@ public class Database {
             Statement smt = conn.createStatement();
             smt.execute(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("An error happened trying to create a database", e);
         }
     }
 
