@@ -32,7 +32,8 @@ public class AddBirthdayCommand implements Command{
             newEntry.setFamilyName(inputFamilyName);
             newEntry.setBirthdate(inputBirthdate);
             try{
-                database.addBirthday(newEntry);
+                var createdBirthday = database.addBirthday(newEntry);
+                if createdBirthday.
                 messageHelper.PrintMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY.getTemplate());
             } catch (RuntimeException e) {
                 messageHelper.PrintFormattedMessage(Messages.ERROR_MESSAGE, e);

@@ -12,7 +12,6 @@ public class Database {
     public Database(DataSource dataSource, MessageHelper messageHelper){
         this.dataSource = dataSource;
         this.messageHelper = messageHelper;
-        this.messageHelper = messageHelper;
     }
 
     public void createTable() {
@@ -42,6 +41,7 @@ public class Database {
                 preparedStatement.setObject(3, newEntry.birthdate);
                 preparedStatement.executeUpdate();
 
+                // TODO: Change the flow => if the new birthday is not created we need to return an empty Birthdaymanager object in the else and add a catch to handle errors
                 try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()){
                     if (generatedKeys.next()) {
                         newEntry.setId(generatedKeys.getInt(1));
