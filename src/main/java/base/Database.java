@@ -52,7 +52,7 @@ public class Database {
      *          or {@code null} if the insert failed and no Id was generated
      * @throws SQLException if any SQL exception is thrown
      */
-    public BirthdaysManager addBirthday(BirthdaysManager newEntry) throws SQLException{
+    public BirthdaysManager addBirthday(BirthdaysManager newEntry) throws RuntimeException{
         String sql = "INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
@@ -71,7 +71,7 @@ public class Database {
                 }
             return newEntry;
         } catch (SQLException e) {
-            throw new SQLException("Error adding birthday to the database", e);
+            throw new RuntimeException("Error adding birthday to the database", e);
         }
     }
 

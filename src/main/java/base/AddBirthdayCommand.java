@@ -39,7 +39,7 @@ public class AddBirthdayCommand implements Command{
                 } else {
                     messageHelper.PrintMessage(Messages.BIRTHDAY_ADD_FAILURE.getTemplate());
                 }
-            } catch (SQLException e) {
+            } catch (RuntimeException e) {
                 messageHelper.PrintFormattedMessage(Messages.ERROR_MESSAGE, e);
             }
             String inputAddAnotherBirthday = inputHelper.getInputString(addAnotherBirthday);
