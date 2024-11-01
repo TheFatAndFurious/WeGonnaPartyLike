@@ -31,7 +31,15 @@ public class Database {
         }
     }
 
-    public BirthdaysManager addBirthday(BirthdaysManager newEntry) throws RuntimeException{
+    /**
+     * Add a new birthday entry to the database
+     *
+     * @param newEntry The {@code BirthdayManager} object containing the details for the new entry
+     * @return The {@code BirthdayManager} object with the generated ID if the insert was made successfully
+     *          or {@code null} if the insert failed and no Id was generated
+     * @throws SQLException if any SQL exception is thrown
+     */
+    public BirthdaysManager addBirthday(BirthdaysManager newEntry) throws SQLException{
         String sql = "INSERT INTO birthdays (givenName, familyName, birthdate) VALUES (?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
@@ -41,18 +49,16 @@ public class Database {
                 preparedStatement.setObject(3, newEntry.birthdate);
                 preparedStatement.executeUpdate();
 
-                // TODO: Change the flow => if the new birthday is not created we need to return an empty Birthdaymanager object in the else and add a catch to handle errors
                 try(ResultSet generatedKeys = preparedStatement.getGeneratedKeys()){
                     if (generatedKeys.next()) {
                         newEntry.setId(generatedKeys.getInt(1));
                     } else {
-                        // TODO: refactor to get rid of exception throwing here
-                        throw new SQLException("Created birthday failed, no ID created");
+                        return null;
                     }
                 }
             return newEntry;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new SQLException("Error adding birthday to the database", e);
         }
     }
 

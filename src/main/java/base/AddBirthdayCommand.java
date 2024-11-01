@@ -1,5 +1,6 @@
 package base;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -33,9 +34,12 @@ public class AddBirthdayCommand implements Command{
             newEntry.setBirthdate(inputBirthdate);
             try{
                 var createdBirthday = database.addBirthday(newEntry);
-                if createdBirthday.
-                messageHelper.PrintMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY.getTemplate());
-            } catch (RuntimeException e) {
+                if (createdBirthday != null){
+                    messageHelper.PrintMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY.getTemplate());
+                } else {
+                    messageHelper.PrintMessage(Messages.BIRTHDAY_ADD_FAILURE.getTemplate());
+                }
+            } catch (SQLException e) {
                 messageHelper.PrintFormattedMessage(Messages.ERROR_MESSAGE, e);
             }
             String inputAddAnotherBirthday = inputHelper.getInputString(addAnotherBirthday);
