@@ -12,6 +12,7 @@ public class Database {
     public Database(DataSource dataSource, MessageHelper messageHelper){
         this.dataSource = dataSource;
         this.messageHelper = messageHelper;
+        this.messageHelper = messageHelper;
     }
 
     public void createTable() {

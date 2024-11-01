@@ -13,9 +13,14 @@ public class ConsoleInputHelper implements InputHelper {
     public String getInputString(String prompt) {
         System.out.println(prompt + " ");
         String input = scanner.nextLine().trim();
-        while(input.isEmpty()){
-            System.out.println("Input can not be empty");
+        boolean isEmpty = true;
+        while(isEmpty){
             input = scanner.nextLine().trim();
+            if(input.isEmpty()){
+                System.out.println("Input can not be empty");
+            } else {
+                isEmpty = false;
+            }
         }
         boolean isString = false;
         while (!isString){
