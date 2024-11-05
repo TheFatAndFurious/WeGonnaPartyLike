@@ -13,14 +13,14 @@ public class TaSoeur {
         MessageHelper messageHelper = new MessageHelper();
         DataSource dataSource = new SimpleDataSource(jdbcUrl, username, password);
         Database database = new Database(dataSource, messageHelper);
-        ScheduleTaskManager scheduleTaskManager = new ScheduleTaskManager();
-        scheduleTaskManager.runService();
         try{
             database.createTable();
         } catch (RuntimeException e) {
             messageHelper.PrintFormattedMessage(Messages.ERROR_MESSAGE, e.getMessage());
             System.exit(1);
         }
+        ScheduleTaskManager scheduleTaskManager = new ScheduleTaskManager(database);
+        scheduleTaskManager.runService();
         Application application = new Application(database, messageHelper, inputHelper);
         application.start();
     }
