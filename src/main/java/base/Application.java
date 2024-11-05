@@ -30,6 +30,7 @@ public class Application {
         menuOptionsMap.put(1, new MenuOption("Add new birthday", addBirthday));
         menuOptionsMap.put(2, new MenuOption("List all birthdays", listBirthdays));
         menuOptionsMap.put(3, new MenuOption("Delete a birthday", deleteBirthday));
+        menuOptionsMap.put(4, new MenuOption("Update a birthday", deleteBirthday));
     }
 
     public void start(){
