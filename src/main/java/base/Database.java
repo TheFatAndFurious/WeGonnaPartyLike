@@ -119,23 +119,35 @@ public class Database {
         }
     }
 
-    public ArrayList<BirthdaysManager> getBirthdaysByDate(LocalDate date) {
+    public ArrayList<BirthdaysManager> getBirthdaysByDate(LocalDate date, int range) {
         if (date == null) {
             throw new IllegalArgumentException("Date parameter cannot be null");
+        }
+
+        // Make it a method ?
+        ArrayList<LocalDate> dates = new ArrayList<>();
+        dates.add(date);
+        for(int i = 0; i <= range; i++){
+            dates.add(date.plusDays(i + 1));
         }
 
         String sqlQuery = "SELECT id, givenName, familyName, birthdate FROM birthdays WHERE EXTRACT(MONTH FROM birthdate) = ? AND EXTRACT(DAY FROM birthdate) = ?";
         ArrayList<BirthdaysManager> listOfBirthdays = new ArrayList<>();
 
-        int day = date.getDayOfMonth();
-        int month = date.getMonthValue();
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setInt(1, month);
-            pstmt.setInt(2, day);
+            dates.forEach(LocalDate -> {
+            int day = LocalDate.getDayOfMonth();
+            int month = LocalDate.getMonthValue();
 
+            try{
+                pstmt.setInt(1, month);
+                pstmt.setInt(2, day);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     BirthdaysManager newBirthday = new BirthdaysManager();
@@ -146,15 +158,18 @@ public class Database {
                     newBirthday.setBirthdate(birthdate);
                     listOfBirthdays.add(newBirthday);
                 }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
 
-            return listOfBirthdays;
+            });
 
         } catch (SQLException e) {
             throw new RuntimeException("Database error occurred", e);
         } catch (Exception e) {
             throw new RuntimeException("An unexpected error occurred", e);
         }
+        return listOfBirthdays;
     }
 
     public boolean updateBirthday(BirthdaysManager updatedUser, int id){

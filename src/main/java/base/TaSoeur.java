@@ -24,8 +24,10 @@ public class TaSoeur {
         System.out.println("Today is: " + LocalDate.now());
         ScheduleTaskManager scheduleTaskManager = new ScheduleTaskManager();
         TasksManager tasksManager = new TasksManager(database);
-        Runnable task = tasksManager::checkBirthdays;
-        scheduleTaskManager.runService(task);
+        Runnable task = tasksManager.checkBirthdays(LocalDate.now(), 5);
+        if (task != null) {
+            scheduleTaskManager.runService(task);
+        }
         Application application = new Application(database, messageHelper, inputHelper);
         application.start();
     }

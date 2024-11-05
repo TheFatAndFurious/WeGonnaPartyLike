@@ -12,21 +12,25 @@ public class TasksManager {
 
     /**
      * This method will be used to check if there is a birthday coming up, if positive it will trigger an action (sending an email)
+     * We will generate a start date (today) and a end date (in n number of days depending on of much ahead we want to search)
+     *
+     * @return
      */
-    public void checkBirthdays(){
-        LocalDate todayDate = LocalDate.now();
+    public Runnable checkBirthdays(LocalDate startDate, int range){
         var birthdays = new ArrayList<BirthdaysManager>();
-        var todayBirthdays = new ArrayList<BirthdaysManager>();
-
 
         try {
-            birthdays = database.getBirthdaysByDate(todayDate);
+            birthdays = database.getBirthdaysByDate(startDate, range);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
         birthdays.forEach(BirthdaysManager -> {
-            System.out.println(BirthdaysManager.getGivenName());
+            System.out.println(BirthdaysManager.getFamilyName());
         });
-
+        if(!birthdays.isEmpty()){
+            // trigger some action
+            System.out.println("Pas d'annifs bruh");
+        }
+        return null;
     }
 }
