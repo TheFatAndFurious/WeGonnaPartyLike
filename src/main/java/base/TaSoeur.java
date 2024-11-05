@@ -2,6 +2,8 @@ package base;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 
 public class TaSoeur {
     public static void main(String[] args) throws SQLException {
@@ -19,8 +21,11 @@ public class TaSoeur {
             messageHelper.PrintFormattedMessage(Messages.ERROR_MESSAGE, e.getMessage());
             System.exit(1);
         }
-        ScheduleTaskManager scheduleTaskManager = new ScheduleTaskManager(database);
-        scheduleTaskManager.runService();
+        System.out.println("Today is: " + LocalDate.now());
+        ScheduleTaskManager scheduleTaskManager = new ScheduleTaskManager();
+        TasksManager tasksManager = new TasksManager(database);
+        Runnable task = tasksManager::checkBirthdays;
+        scheduleTaskManager.runService(task);
         Application application = new Application(database, messageHelper, inputHelper);
         application.start();
     }
