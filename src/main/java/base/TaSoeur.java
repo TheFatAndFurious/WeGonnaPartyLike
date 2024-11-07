@@ -29,7 +29,7 @@ public class TaSoeur {
         EmailService emailService = new EmailService();
         System.out.println("test email");
         try{
-            emailService.sendSimpleEmail();
+            emailService.sendSimpleEmail("julie.goineau@gmail.com", "coucou", "ca va toi ? ;)");
         } catch (EmailException e) {
             throw new RuntimeException(e);
         }
