@@ -15,6 +15,13 @@ public class EmailService {
 
     private Config config = new Config();
 
+    /**
+     * This is the method that will be used to send an email if a birthday is coming up.
+     * @param recipient is the recipient of the email
+     * @param subject is the subject of the email
+     * @param message is the body of the email
+     * @throws EmailException that will bubble up to the caller in case it is thrown
+     */
     //TODO: rethink the params (maybe create a special data structure for this) also do we create a method specially for birthday reminders or make it more abstract to be able to use it for other type of mails
     public void sendSimpleEmail(String recipient, String subject, String message ) throws EmailException {
         SimpleEmail simpleEmail = new SimpleEmail();

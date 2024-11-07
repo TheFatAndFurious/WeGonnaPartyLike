@@ -26,15 +26,9 @@ public class TaSoeur {
             messageHelper.PrintFormattedMessage(Messages.ERROR_MESSAGE, e.getMessage());
             System.exit(1);
         }
-        EmailService emailService = new EmailService();
-        System.out.println("test email");
-        try{
-            emailService.sendSimpleEmail("julie.goineau@gmail.com", "coucou", "ca va toi ? ;)");
-        } catch (EmailException e) {
-            throw new RuntimeException(e);
-        }
         ScheduleTaskManager scheduleTaskManager = new ScheduleTaskManager();
-        TasksManager tasksManager = new TasksManager(database);
+        EmailService emailService = new EmailService();
+        TasksManager tasksManager = new TasksManager(database, emailService);
         Runnable task = tasksManager.checkBirthdays(LocalDate.now(), 5);
         if (task != null) {
             scheduleTaskManager.runService(task);
