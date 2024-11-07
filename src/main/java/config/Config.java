@@ -1,7 +1,6 @@
 package config;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -29,6 +28,17 @@ public class Config {
 
     public String getDBUrl(){
         return properties.getProperty("DB.url");
+    }
+
+    public String getEmailUsername(){return properties.getProperty("email.username");}
+
+    public String getEmailPassword(){return properties.getProperty("email.password");}
+
+    public String getEmailHost(){return properties.getProperty("smtp.host");}
+
+    public int getEmailPort(){
+        String port = properties.getProperty("smtp.port");
+        return Integer.parseInt(port);
     }
 }
 
