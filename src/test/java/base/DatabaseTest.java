@@ -1,5 +1,6 @@
 package base;
 
+import base.util.MessageHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

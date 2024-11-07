@@ -1,5 +1,7 @@
 package base;
 
+import base.util.MessageHelper;
+
 import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDate;

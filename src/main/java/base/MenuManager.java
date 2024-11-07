@@ -1,8 +1,10 @@
 package base;
 
+import base.util.InputHelper;
+import base.util.MessageHelper;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class MenuManager {
     InputHelper inputHelper;

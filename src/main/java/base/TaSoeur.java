@@ -1,12 +1,14 @@
 package base;
 
+import base.util.ConsoleInputHelper;
+import base.util.InputHelper;
+import base.util.MessageHelper;
 import config.Config;
 import org.apache.commons.mail.EmailException;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
 
 public class TaSoeur {
     public static void main(String[] args) throws SQLException, EmailException {

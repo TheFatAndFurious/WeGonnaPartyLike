@@ -1,4 +1,6 @@
-package base;
+package base.util;
+
+import base.Messages;
 
 public class MessageHelper {
 

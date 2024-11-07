@@ -6,8 +6,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TasksManager {
+
     private Database database;
     private EmailService emailService;
+
     public TasksManager(Database database, EmailService emailService){
         this.database = database; this.emailService = emailService;
     }

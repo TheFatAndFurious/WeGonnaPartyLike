@@ -1,5 +1,7 @@
 package base;
 
+import base.util.MessageHelper;
+
 import java.util.ArrayList;
 
 public class ListBirthdaysCommand implements Command{

@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 public class BirthdaysManager {
 // TODO: Rewrite getters/setters
-    Integer id;
-    String givenName;
-    String familyName;
-    LocalDate birthdate;
+    public Integer id;
+    public String givenName;
+    public String familyName;
+    public LocalDate birthdate;
 
     public void setId(Integer id) {
         this.id = id;
