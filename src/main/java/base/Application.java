@@ -7,6 +7,7 @@ import config.Config;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -18,33 +19,35 @@ import java.util.Map;
 public class Application {
     private Database database;
     private InputHelper inputHelper;
+    private EmailService emailService;
+    private ScheduleTaskManager scheduleTaskManager;
     private Map<Integer, MenuOption> menuOptionsMap;
     private MenuManager menuManager;
     private MessageHelper messageHelper;
     private Config config;
-    public Application(Database database){
-        this.database = database;
-    }
+    private TasksManager tasksManager;
+
+    public Application(){}
 
     /**
      * Initiating a Config object to be able the reach the config file
      */
     //TODO: Should we pass a param to allow to use different config files ?
-    public void initConfig(){
+    private void initConfig(){
         this.config = new Config();
     }
 
-    public void initHelpers() {
+    private void initHelpers() {
         this.messageHelper = new MessageHelper();
         this.inputHelper = new ConsoleInputHelper();
     }
 
-    public void initializeDatabase() throws SQLException {
+    private void initDatabase() throws SQLException {
         String jdbcUrl = config.getDBUrl();
         String username = config.getDBUsername();
         String password = config.getDBPassword();
         DataSource dataSource = new SimpleDataSource(jdbcUrl, username, password);
-        Database database = new Database(dataSource, messageHelper);
+        database = new Database(dataSource, messageHelper);
         try{
             database.createTable();
         } catch (RuntimeException e) {
@@ -52,14 +55,42 @@ public class Application {
             System.exit(1);
         }
     }
+
+    private void initServices(){
+        this.scheduleTaskManager = new ScheduleTaskManager();
+        this.emailService = new EmailService();
+    }
+
+    private void initTasks(){
+        this.tasksManager = new TasksManager(database, emailService);
+    }
+
+    private void scheduleTasks(){
+        Runnable task = tasksManager.checkBirthdays(LocalDate.now(), 5);
+        if (task != null) {
+            scheduleTaskManager.runService(task);
+        }
+    }
+
     public void initializeApp(){
-        menuOptionsMap = new LinkedHashMap<>();
-        menuManager = new MenuManager(inputHelper, messageHelper, menuOptionsMap);
-        initializeCommands();
+        try {
+            initConfig();
+            initHelpers();
+            initDatabase();
+            initServices();
+            initTasks();
+            initializeCommands();
+        } catch (Exception e){
+            System.out.println("Error starting the system" + e);
+            e.getStackTrace();
+            System.exit(1);
+        }
     }
 
 
     private void initializeCommands(){
+        menuOptionsMap = new LinkedHashMap<>();
+        menuManager = new MenuManager(inputHelper, messageHelper, menuOptionsMap);
         Command addBirthday = new AddBirthdayCommand(database, messageHelper, inputHelper);
         Command deleteBirthday = new DeleteBirthdayCommand(messageHelper, inputHelper, database);
         Command listBirthdays = new ListBirthdaysCommand(database, messageHelper);

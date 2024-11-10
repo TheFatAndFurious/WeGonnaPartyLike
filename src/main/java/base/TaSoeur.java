@@ -13,14 +13,9 @@ import java.time.LocalDate;
 public class TaSoeur {
     public static void main(String[] args) throws SQLException, EmailException {
         System.out.println("Welcome my guy");
-        ScheduleTaskManager scheduleTaskManager = new ScheduleTaskManager();
-        EmailService emailService = new EmailService();
-        TasksManager tasksManager = new TasksManager(database, emailService);
-        Runnable task = tasksManager.checkBirthdays(LocalDate.now(), 5);
-        if (task != null) {
-            scheduleTaskManager.runService(task);
-        }
-        Application application = new Application(database);
+
+        Application application = new Application();
+        application.initializeApp();
         application.start();
 
     }
