@@ -37,11 +37,18 @@ public class Application {
         this.config = new Config();
     }
 
+    /**
+     * Initializing the classes we will use to print messages to the user and take user inputs
+     */
     private void initHelpers() {
         this.messageHelper = new MessageHelper();
         this.inputHelper = new ConsoleInputHelper();
     }
 
+    /**
+     * Initializing the database
+     * @throws SQLException that will bubble up and be handled by the caller of this method
+     */
     private void initDatabase() throws SQLException {
         String jdbcUrl = config.getDBUrl();
         String username = config.getDBUsername();
@@ -56,15 +63,24 @@ public class Application {
         }
     }
 
+    /**
+     * Initializing the services used to send emails and the scheduler
+     */
     private void initServices(){
         this.scheduleTaskManager = new ScheduleTaskManager();
         this.emailService = new EmailService();
     }
 
+    /**
+     * Initializing the class responsible for tasks logic
+     */
     private void initTasks(){
         this.tasksManager = new TasksManager(database, emailService);
     }
 
+    /**
+     * Passing a task to the scheduler
+     */
     private void scheduleTasks(){
         Runnable task = tasksManager.checkBirthdays(LocalDate.now(), 5);
         if (task != null) {
@@ -87,7 +103,9 @@ public class Application {
         }
     }
 
-
+    /**
+     * Building the menu
+     */
     private void initializeCommands(){
         menuOptionsMap = new LinkedHashMap<>();
         menuManager = new MenuManager(inputHelper, messageHelper, menuOptionsMap);

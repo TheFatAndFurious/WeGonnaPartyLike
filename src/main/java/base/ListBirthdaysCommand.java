@@ -4,6 +4,10 @@ import base.util.MessageHelper;
 
 import java.util.ArrayList;
 
+/**
+ * This class will be used to print a list of all the birthdays in the database
+ */
+
 public class ListBirthdaysCommand implements Command{
         Database database;
         MessageHelper messageHelper;
