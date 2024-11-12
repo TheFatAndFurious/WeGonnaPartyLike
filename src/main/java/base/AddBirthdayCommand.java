@@ -49,9 +49,9 @@ public class AddBirthdayCommand implements Command{
      * This method is used after the user created a birthday and allow to ask the user if he wants to add another birthday
      * @return false if the user inputs "n/N" and doesn't want to add another birthday
      */
-    private boolean addAnotherBirthday(){
+    public boolean addAnotherBirthday(){
         String input = inputHelper.getInputString(addAnotherBirthday);
-        return Objects.equals(input.trim().toLowerCase(), "n");
+        return !Objects.equals(input.trim().toLowerCase(), "n");
     }
 
 
