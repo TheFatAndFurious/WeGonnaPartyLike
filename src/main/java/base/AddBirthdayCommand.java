@@ -32,7 +32,6 @@ public class AddBirthdayCommand implements Command{
         this.enterFamilyName = messageHelper.PrintFormattedMessage(Messages.ENTER_FAMILY_NAME);
         this.enterBirthdate = messageHelper.PrintFormattedMessage(Messages.ENTER_BIRTHDATE);
         this.addAnotherBirthday = messageHelper.PrintFormattedMessage(Messages.ADD_ANOTHER_BIRTHDAY);
-
     }
 
     @Override
@@ -40,24 +39,32 @@ public class AddBirthdayCommand implements Command{
         boolean operationIsFinished = false;
 
         while(!operationIsFinished){
-            var newEntry = getBirthdayFromUser();
-            try{
-                var createdBirthday = database.addBirthday(newEntry);
-                if (createdBirthday != null){
-                    messageHelper.PrintMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY.getTemplate());
-                } else {
-                    messageHelper.PrintMessage(Messages.BIRTHDAY_ADD_FAILURE.getTemplate());
-                }
-            } catch (RuntimeException e) {
-                messageHelper.PrintFormattedMessage(Messages.ERROR_MESSAGE, e);
-            }
-            String inputAddAnotherBirthday = inputHelper.getInputString(addAnotherBirthday);
-            if(Objects.equals(inputAddAnotherBirthday, "n")){
-                operationIsFinished = true;
-            }
-
+            BirthdaysManager newEntry = getBirthdayFromUser();
+            persistBirthday(newEntry);
+            operationIsFinished = addAnotherBirthday();
         }
     }
+
+    private boolean addAnotherBirthday(){
+        String input = inputHelper.getInputString(addAnotherBirthday);
+        return Objects.equals(input.trim().toLowerCase(), "n");
+    }
+
+
+    private void persistBirthday(BirthdaysManager birthday){
+        try{
+            var createdBirthday = database.addBirthday(birthday);
+            if (createdBirthday != null){
+                messageHelper.PrintMessage(Messages.BIRTHDAY_ADDED_SUCCESSFULLY.getTemplate());
+
+            } else {
+                messageHelper.PrintMessage(Messages.BIRTHDAY_ADD_FAILURE.getTemplate());
+            }
+        } catch (RuntimeException e) {
+            messageHelper.PrintFormattedMessage(Messages.ERROR_MESSAGE, e);
+        }
+    }
+
     private BirthdaysManager getBirthdayFromUser(){
         String inputGivenName = inputHelper.getInputString(enterGivenName);
         String inputFamilyName = inputHelper.getInputString(enterFamilyName);
