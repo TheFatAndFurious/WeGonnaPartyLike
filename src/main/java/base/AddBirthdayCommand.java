@@ -40,14 +40,7 @@ public class AddBirthdayCommand implements Command{
         boolean operationIsFinished = false;
 
         while(!operationIsFinished){
-            String inputGivenName = inputHelper.getInputString(enterGivenName);
-            String inputFamilyName = inputHelper.getInputString(enterFamilyName);
-            LocalDate inputBirthdate = inputHelper.getInputLocalDate(enterBirthdate);
-
-            BirthdaysManager newEntry = new BirthdaysManager();
-            newEntry.setGivenName(inputGivenName);
-            newEntry.setFamilyName(inputFamilyName);
-            newEntry.setBirthdate(inputBirthdate);
+            var newEntry = getBirthdayFromUser();
             try{
                 var createdBirthday = database.addBirthday(newEntry);
                 if (createdBirthday != null){
@@ -64,6 +57,18 @@ public class AddBirthdayCommand implements Command{
             }
 
         }
+    }
+    private BirthdaysManager getBirthdayFromUser(){
+        String inputGivenName = inputHelper.getInputString(enterGivenName);
+        String inputFamilyName = inputHelper.getInputString(enterFamilyName);
+        LocalDate inputBirthdate = inputHelper.getInputLocalDate(enterBirthdate);
+
+        BirthdaysManager newEntry = new BirthdaysManager();
+        newEntry.setGivenName(inputGivenName);
+        newEntry.setFamilyName(inputFamilyName);
+        newEntry.setBirthdate(inputBirthdate);
+
+        return newEntry;
     }
 
 }
