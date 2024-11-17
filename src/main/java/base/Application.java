@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 /**
@@ -82,10 +83,11 @@ public class Application {
      * Passing a task to the scheduler
      */
     private void scheduleTasks(){
-        Runnable task = tasksManager.checkBirthdays(LocalDate.now(), 5);
-        if (task != null) {
+        Runnable task = () -> {
+            var upcomingBirthdays = tasksManager.checkBirthdays(LocalDate.now(), 5);
+            tasksManager.sendBirthdayNotifications(upcomingBirthdays);
+            };
             scheduleTaskManager.runService(task);
-        }
     }
 
     public void initializeApp(){
@@ -112,11 +114,13 @@ public class Application {
         Command addBirthday = new AddBirthdayCommand(database, messageHelper, inputHelper);
         Command deleteBirthday = new DeleteBirthdayCommand(messageHelper, inputHelper, database);
         Command listBirthdays = new ListBirthdaysCommand(database, messageHelper);
+        NotesManager notesManager = new NotesManager();
 
         menuOptionsMap.put(1, new MenuOption("Add new birthday", addBirthday));
         menuOptionsMap.put(2, new MenuOption("List all birthdays", listBirthdays));
         menuOptionsMap.put(3, new MenuOption("Delete a birthday", deleteBirthday));
         menuOptionsMap.put(4, new MenuOption("Update a birthday", deleteBirthday));
+        menuOptionsMap.put(5, new MenuOption("Take notes", notesManager));
     }
 
     public void start(){

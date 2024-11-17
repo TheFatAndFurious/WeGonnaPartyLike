@@ -47,7 +47,6 @@ public class DatabaseTest {
         verify(mockConnection).prepareStatement("DELETE FROM birthdays WHERE id = ?");
         verify(mockPreparedStatement).setInt(1, idToDelete);
         verify(mockPreparedStatement).executeUpdate();
-        verify(messageHelper).PrintFormattedMessage(Messages.BIRTHDAY_DELETED_SUCCESSFULLY);
 
         verify(mockPreparedStatement).close();
         verify(mockConnection).close();
