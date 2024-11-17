@@ -3,6 +3,9 @@ package base;
 import base.util.InputHelper;
 import base.util.MessageHelper;
 
+/**
+ * Class responsible for user deletions
+ */
 public class DeleteBirthdayCommand implements Command{
     MessageHelper messageHelper;
     InputHelper inputHelper;
@@ -14,7 +17,9 @@ public class DeleteBirthdayCommand implements Command{
         this.database = database;
     }
 
-
+    /**
+     * user will be asked for the ID of the user he wants to delete, after he first inputs it he will then be asked to confirm it before any deletion is made
+     */
     @Override
     public void execute() {
         String idToDelete = messageHelper.PrintFormattedMessage(Messages.ID_TO_DELETE);
