@@ -90,6 +90,9 @@ public class Application {
             scheduleTaskManager.runService(task);
     }
 
+    /**
+     * Getting everything started
+     */
     public void initializeApp(){
         try {
             initConfig();

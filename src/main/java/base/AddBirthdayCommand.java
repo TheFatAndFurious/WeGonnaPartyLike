@@ -27,6 +27,9 @@ public class AddBirthdayCommand implements Command{
         initMessages();
     }
 
+    /**
+     * Creating the strings that will be used to interact with the user
+     */
     private void initMessages(){
         this.enterGivenName = messageHelper.PrintFormattedMessage(Messages.ENTER_GIVEN_NAME);
         this.enterFamilyName = messageHelper.PrintFormattedMessage(Messages.ENTER_FAMILY_NAME);
@@ -47,8 +50,9 @@ public class AddBirthdayCommand implements Command{
 
     /**
      * This method is used after the user created a birthday and allow to ask the user if he wants to add another birthday
-     * @return false if the user inputs "n/N" and doesn't want to add another birthday
+     * @return false if the user inputs "n/N" and doesn't want to add another birthday, true if he inputs anything else
      */
+    //TODO: need to improve the options the user can successfully input (Y/N)
     public boolean addAnotherBirthday(){
         String input = inputHelper.getInputString(addAnotherBirthday);
         return !Objects.equals(input.trim().toLowerCase(), "n");
